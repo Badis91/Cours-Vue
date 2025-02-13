@@ -98,4 +98,10 @@ input {
   background-color: red;
   margin-top: 3px;
 }
+
+#actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 </style>

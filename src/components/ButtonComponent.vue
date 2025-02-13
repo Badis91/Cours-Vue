@@ -1,6 +1,6 @@
 <template>
 
-<button :id="data.id" :type="data.type ?? 'text'">Reinitialiser</button>
+<button :id="data.id" :type="data.type ?? 'text'">{{ data.text }}</button>
 
 </template>
 
@@ -8,6 +8,7 @@
 
 interface ButtonComponentProperties {
     data: {
+        text: string,
         id: string,
         type: 'button' | 'submit' | 'reset',
     }
