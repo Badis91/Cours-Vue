@@ -1,22 +1,65 @@
 <template>
 
-    <fieldset>
-        <legend>Connexion</legend>
-           <FormComponent />
-           <!-- Affichage d'erreur -->
+  <fieldset>
+    <legend>Connexion</legend>
+
+    <!-- Affichage d'erreur -->
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
-<!-- Indication de succès -->
-<p v-if="isLoggedIn" class="success"> Vous êtes connecté en tant que {{ username }} !</p>
-    </fieldset>
+    <!-- Indication de succès -->
+    <p v-if="isLoggedIn" class="success"> Vous êtes connecté en tant que {{ username }} !</p>
+  </fieldset>
+  <FormComponent :data="formData" />
 
 </template>
 
 <script setup lang="ts">
-import { ref, computed} from 'vue'
+import { ref, computed, reactive } from 'vue'
 import FormComponent from '../components/FormComponent.vue'
+import type ButtonInterface from '../interfaces/ButtonInterface'
+
+
+
+
+interface FormComponentProperties {
+  data: {
+    fields: {
+      id: string,
+      type: string,
+      placeholder: string
+    }[],
+    buttons: ButtonInterface[]
+  }
+}
+
+
 
 // 1. Déclarations des variables réactives
+const formData: FormComponentProperties['data'] = reactive({
+  fields: [{
+    id: 'email',
+    type: 'email',
+    placeholder: 'Entrer vos identifiants'
+
+  },
+  {
+    id: 'password',
+    type: 'password',
+    placeholder: 'Entrer votre mot de passe'
+  }],
+  buttons: [{
+    id: 'inscription',
+    type: 'submit',
+    text: 'Valider'
+  },
+  {
+    id: 'reset',
+    type: 'reset',
+    text: 'Annuler'
+  }] as any
+})
+
+
 const username = ref('')
 const password = ref('')
 const isLoggedIn = ref(false)
@@ -30,7 +73,7 @@ const isFormValid = computed(() => {
 // 3. Fonction de connexion
 function handleLogin() {
   errorMessage.value = ''
-  
+
   if (!username.value || !password.value) {
     errorMessage.value = 'Veuillez remplir tous les champs.'
     return
@@ -47,7 +90,7 @@ function handleLogin() {
 }
 </script>
 
-<style >
+<style>
 .login-form {
   max-width: 300px;
   margin: 0 auto;
@@ -55,13 +98,16 @@ function handleLogin() {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
+
 .login-form div {
   margin-bottom: 1rem;
 }
+
 .error {
   color: red;
   margin-top: 0.5rem;
 }
+
 .success {
   color: green;
   margin-top: 0.5rem;
@@ -75,6 +121,7 @@ fieldset {
   margin: 1rem auto;
   max-width: 300px;
 }
+
 input {
   width: 100%;
   margin-bottom: 0.5rem;

@@ -3,22 +3,18 @@
         <label :for="data.id"></label>
         <input 
         :type="data.type ? data.type : 'text'" 
-        :placeholder="data.placeholder" 
-        :class="data.class ? data.class : ''" 
+        :placeholder="data.text"  
         />
 
     </article>
 </template>
 
 <script setup lang="ts">
+import type ButtonInterface from '../interfaces/ButtonInterface';
+
 
 interface FieldComponentProperties {
-    data: {
-        id: string,
-        type?: string,
-        placeholder: string,
-        class?: string
-    }
+    data: ButtonInterface
 }
 
 defineProps<FieldComponentProperties>()
